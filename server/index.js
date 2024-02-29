@@ -13,7 +13,7 @@ app.use(cors({
     origin:"http://localhost:5173",
 }));
 
-mongoose.connect("mongodb://localhost:27017/esse");
+mongoose.connect("mongodb+srv://fabiolr81:xk3fOGtbt9Po7uVE@cluster0.y1dx2y0.mongodb.net/");
 const ExpensesModel = require('./models/Expenses');
 
 
