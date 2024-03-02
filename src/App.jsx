@@ -5,7 +5,6 @@ import moment from "moment";
 import "moment/min/moment-with-locales"
 import "bootstrap-icons/font/bootstrap-icons.css"
 
-
 function App() {
     const [expense, setExpense] = useState({
         id:"",
@@ -89,7 +88,7 @@ function App() {
                 <tbody>
                     <ExpenseList items={expenses} deleteItem={deleteExpense} />
                 </tbody>
-                <tfoot>
+                <tfoot className="table-primary">
                     <tr>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -107,16 +106,6 @@ function App() {
                             }
                             </span>
                         </th>
-                    </tr>
-                </tfoot>
-                <tfoot className="table-primary">
-                    <tr>
-                        <th scope="col">Data</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Importo</th>
-                        <th scope="col"></th>
                     </tr>
                 </tfoot>
             </table>
