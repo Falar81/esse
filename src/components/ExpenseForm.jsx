@@ -3,12 +3,12 @@ export const ExpenseForm = ({hc, hs, expense}) => {
     return (
         <>
             <form>
-                <div className="row align-items-start">
-                    <div className="form-group col-md-2">
+                <div className="row ">
+                    <div className="form-group ">
                         <label htmlFor="exampleFormControlDesc">Data</label>
                         <input type="date" value={expense.date} name="date" onChange={(e) => {hc(e)}} className="form-control shadow" />
                     </div>
-                    <div className="form-group col-md-2">
+                    <div className="form-group ">
                         <label htmlFor="exampleFormControlCategory">Categoria</label>
                         <select value={expense.category} name="category" onChange={(e) => {hc(e)}} className="form-control shadow" id="exampleFormControlCategory" placeholder="Categoria">
                             <option></option>
@@ -18,7 +18,7 @@ export const ExpenseForm = ({hc, hs, expense}) => {
                             <option>Varie</option>
                         </select>
                     </div>
-                    <div className="form-group col-md-2">
+                    <div className="form-group ">
                         <label htmlFor="exampleFormControlSelect1">Tipo</label>
                         <select value={expense.type} name="type" onChange={(e) => {hc(e)}} className="form-control shadow" id="exampleFormControlSelect1">
                             <option></option>
@@ -26,12 +26,12 @@ export const ExpenseForm = ({hc, hs, expense}) => {
                             <option value="Uscita">Uscita -</option>
                         </select>
                     </div>
-                    <div className="form-group col-md-2">
+                    <div className="form-group ">
                         <label htmlFor="exampleFormControlDesc">Importo</label>
                         <input type="number" value={expense.amount}  name="amount" onChange={(e) => {hc(e)}} className="form-control shadow" />
                     </div>
 
-                    <div className="form-group col-md-4">
+                    <div className="form-group ">
                         <label htmlFor="exampleFormControlDesc">Desc.</label>
                         <input type="text" value={expense.description} name="description" onChange={(e) => {hc(e)}} className="form-control shadow" id="exampleFormControlDesc"/>
                     </div>
