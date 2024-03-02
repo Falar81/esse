@@ -18,9 +18,9 @@ function App() {
 
     const [expenses, setExpenses] = useState( []);
     const makeAPICall = async (param,options) => {
-        let url='http://localhost:3000/sampleData';
+        let url='https://esseapi.onrender.com/sampleData';
         if(options.method === 'DELETE'){
-            url = `http://localhost:3000/sampleData${param?"/"+param:""}`
+            url = `https://esseapi.onrender.com/sampleData${param?"/"+param:""}`
         }
         try {
             const response = await fetch(url,options);
