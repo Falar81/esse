@@ -13,7 +13,7 @@ export const ExpenseList = ({items, deleteItem}) => {
                             <td>{description}</td>
                             <td>{type}</td>
                             <td className={(type==='Uscita' ? 'text-danger' : 'text-success')}>{amount} €</td>
-                            <td className="text-end"><button className="btn btn-outline-danger btn-sm px-3 shadow" onClick={()=>deleteItem(_id)}><i class="bi bi-trash2"></i></button></td>
+                            <td className="text-end"><button className="btn btn-outline-danger btn-sm px-3 shadow" onClick={()=>deleteItem(_id)}><i className="bi bi-trash2"></i></button></td>
                         </tr>)
                     }
                 )

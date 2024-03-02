@@ -73,40 +73,9 @@ function App() {
             <span className="text-center">
                 <h1> ESSE</h1> <h3>Mese di <b>{moment().format('MMM') }{' '}{ moment().format('YYYY')}</b></h3>
             </span>
+            <ExpenseForm hs={handleExpenseSubmit} hc={handleChange} expense={expense} />
 
-            <table className="mt-3 table table-striped table-responsive">
-                <thead className="table-primary">
-                    <tr>                        
-                        <th scope="col">
-                            <input type="date" value={expense.date} name="date" onChange={(e) => {handleChange(e)}} className="form-control shadow" />
-                        </th>
-                        <th scope="col">
-                            <select value={expense.category} name="category" onChange={(e) => {handleChange(e)}} className="form-control shadow" placeholder="Categoria">
-                                <option></option>
-                                <option>Stipendi</option>
-                                <option>Rimborsi</option>
-                                <option>Fornitori</option>
-                                <option>Varie</option>
-                            </select>
-                        </th>
-                        <th scope="col">
-                            <input type="text" value={expense.description} name="description" onChange={(e) => {handleChange(e)}} className="form-control shadow"/>
-                        </th>
-                        <th scope="col">
-                            <select value={expense.type} name="type" onChange={(e) => {handleChange(e)}} className="form-control shadow">
-                                <option></option>
-                                <option value="Entrata">Entrata +</option>
-                                <option value="Uscita">Uscita -</option>
-                            </select>
-                        </th>
-                        <th scope="col">
-                            <input type="number" value={expense.amount}  name="amount" onChange={(e) => {handleChange(e)}} className="form-control shadow" />
-                        </th>
-                        <th scope="col">
-                            <button type="submit" className="btn btn-success shadow" onClick={handleExpenseSubmit}><i class="bi bi-patch-check"></i></button>
-                        </th>
-                    </tr>
-                </thead>
+            <table className="mt-3 table table-striped table-responsive">                
                 <thead className="table-primary">
                     <tr>
                         <th scope="col">Data</th>

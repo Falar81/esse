@@ -6,11 +6,11 @@ export const ExpenseForm = ({hc, hs, expense}) => {
                 <div className="row align-items-start">
                     <div className="form-group col-md-2">
                         <label htmlFor="exampleFormControlDesc">Data</label>
-                        <input type="date" value={expense.date} name="date" onChange={(e) => {hc(e)}} className="form-control" />
+                        <input type="date" value={expense.date} name="date" onChange={(e) => {hc(e)}} className="form-control shadow" />
                     </div>
                     <div className="form-group col-md-2">
                         <label htmlFor="exampleFormControlCategory">Categoria</label>
-                        <select value={expense.category} name="category" onChange={(e) => {hc(e)}} className="form-control" id="exampleFormControlCategory" placeholder="Categoria">
+                        <select value={expense.category} name="category" onChange={(e) => {hc(e)}} className="form-control shadow" id="exampleFormControlCategory" placeholder="Categoria">
                             <option></option>
                             <option>Stipendi</option>
                             <option>Rimborsi</option>
@@ -20,7 +20,7 @@ export const ExpenseForm = ({hc, hs, expense}) => {
                     </div>
                     <div className="form-group col-md-2">
                         <label htmlFor="exampleFormControlSelect1">Tipo</label>
-                        <select value={expense.type} name="type" onChange={(e) => {hc(e)}} className="form-control" id="exampleFormControlSelect1">
+                        <select value={expense.type} name="type" onChange={(e) => {hc(e)}} className="form-control shadow" id="exampleFormControlSelect1">
                             <option></option>
                             <option value="Entrata">Entrata +</option>
                             <option value="Uscita">Uscita -</option>
@@ -28,15 +28,15 @@ export const ExpenseForm = ({hc, hs, expense}) => {
                     </div>
                     <div className="form-group col-md-2">
                         <label htmlFor="exampleFormControlDesc">Importo</label>
-                        <input type="number" value={expense.amount}  name="amount" onChange={(e) => {hc(e)}} className="form-control" />
+                        <input type="number" value={expense.amount}  name="amount" onChange={(e) => {hc(e)}} className="form-control shadow" />
                     </div>
 
                     <div className="form-group col-md-4">
                         <label htmlFor="exampleFormControlDesc">Desc.</label>
-                        <input type="text" value={expense.description} name="description" onChange={(e) => {hc(e)}} className="form-control" id="exampleFormControlDesc"/>
+                        <input type="text" value={expense.description} name="description" onChange={(e) => {hc(e)}} className="form-control shadow" id="exampleFormControlDesc"/>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-success mt-3 shadow offset-4 px-5" onClick={hs}>Salva</button>
+                <button type="submit" className="btn btn-success mt-3 shadow offset-5 px-4 shadow" onClick={hs}><i className="bi bi-patch-check"></i></button>
             </form>
         </>
     )
