@@ -77,67 +77,64 @@ function App() {
 
     return (
         <>
-            <div className="d-flex flex-column align-items-md-center p-3 bg-light">
-
-                {/* Modal */}
-                <div className="modal fade" ref={exampleModal} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" className="btn-close" onClick={() => modal.hide()} aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                <ExpenseForm hs={handleExpenseSubmit} hc={handleChange} expense={expense} />
-                            </div>
-                            <div className="modal-footer">
-                            </div>
+            {/* Modal */}
+            <div className="modal fade" ref={exampleModal} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" className="btn-close" onClick={() => modal.hide()} aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <ExpenseForm hs={handleExpenseSubmit} hc={handleChange} expense={expense} />
+                        </div>
+                        <div className="modal-footer">
                         </div>
                     </div>
                 </div>
-                <span className="text-center">
-                    <h1> ESSE</h1> <h3>Mese di <b>{moment().format('MMM')}{' '}{moment().format('YYYY')}</b></h3>
-                </span>
-
-                <table className="mt-3 table table-striped table-responsive">
-                    <thead className="table-primary">
-                        <tr>
-                            <th scope="col">Data</th>
-                            <th scope="col">Categoria</th>
-                            <th scope="col">Descrizione</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Importo</th>
-                            <th scope="col" className="text-end">
-                                <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i class="bi bi-file-earmark-plus"></i>
-                                </button>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ExpenseList items={expenses} deleteItem={deleteExpense} />
-                    </tbody>
-                    <tfoot className="table-primary">
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col" className="text-end table-primary">Totale €.{' '}
-                                <span className="badge rounded-pill text-bg-info px-3 shadow">
-                                    {
-                                        expenses.reduce((accumulator, expense) => {
-                                            if (expense.type === 'Uscita')
-                                                return accumulator - Number(expense.amount);
-                                            return accumulator + Number(expense.amount);
-                                        }, 0)
-                                    }
-                                </span>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
             </div>
+            <span className="text-center">
+                <h1> ESSE</h1> <h3>Mese di <b>{moment().format('MMM')}{' '}{moment().format('YYYY')}</b></h3>
+            </span>
+
+            <table className="mt-3 table table-striped table-responsive">
+                <thead className="table-primary">
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Descrizione</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Importo</th>
+                        <th scope="col" className="text-end">
+                            <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i class="bi bi-file-earmark-plus"></i>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ExpenseList items={expenses} deleteItem={deleteExpense} />
+                </tbody>
+                <tfoot className="table-primary">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col" className="text-end table-primary">Totale €.{' '}
+                            <span className="badge rounded-pill text-bg-info px-3 shadow">
+                                {
+                                    expenses.reduce((accumulator, expense) => {
+                                        if (expense.type === 'Uscita')
+                                            return accumulator - Number(expense.amount);
+                                        return accumulator + Number(expense.amount);
+                                    }, 0)
+                                }
+                            </span>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
         </>
     )
 }
