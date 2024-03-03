@@ -91,6 +91,7 @@ function App() {
                 amount: "",
                 category: ""
             });
+            modal.hide();
         }
     }
 
