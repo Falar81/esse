@@ -12,7 +12,7 @@ export const ExpenseForm = ({hc, hs, expense}) => {
                         <label htmlFor="exampleFormControlCategory">Categoria</label>
                         <select value={expense.category} name="category" onChange={(e) => {hc(e)}} className="form-control shadow" id="exampleFormControlCategory" placeholder="Categoria">
                             <option></option>
-                            <option>Stipendi</option>
+                            <option>Compensi</option>
                             <option>Rimborsi</option>
                             <option>Fornitori</option>
                             <option>Varie</option>

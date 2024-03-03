@@ -15,7 +15,8 @@ function App() {
         amount: "",
         category: ""
     });
-
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSelected, setIsSelected] = useState(false);
     const [expenses, setExpenses] = useState([]);
     const [modal, setModal] = useState(null)
     const exampleModal = useRef()
@@ -27,8 +28,10 @@ function App() {
             url = `https://esseapi.onrender.com/sampleData${param ? "/" + param : ""}`
         }
         try {
+            setIsLoading(true);
             const response = await fetch(url, options);
             const data = await response.json();
+            setIsLoading(false);             
             setExpenses(data);
         }
         catch (e) {
@@ -48,7 +51,24 @@ function App() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        
         setExpense({ ...expense, [name]: value });
+        if(name === 'category' && value === 'Varie'){            
+            setExpense({...expense, type: 'Entrata',category: 'Varie'});
+            
+        }
+        if(name === 'category' && value === 'Fornitori'){            
+            setExpense({...expense, type: 'Uscita',category: 'Fornitori'});
+            
+        }
+        if(name === 'category' && value === 'Rimborsi'){            
+            setExpense({...expense, type: 'Uscita',category: 'Rimborsi'});            
+        }
+        if(name === 'category' && value === 'Compensi'){            
+            setExpense({...expense, type: 'Uscita',category: 'Compensi'});            
+        }
+
+        
     }
 
     const handleExpenseSubmit = (e) => {
@@ -106,12 +126,13 @@ function App() {
                         <th scope="col">Tipo</th>
                         <th scope="col">Importo</th>
                         <th scope="col" className="text-end">
-                            <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i class="bi bi-file-earmark-plus"></i>
+                            <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
                             </button>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
+                {isLoading && <tr><td colSpan="6" className="text-center">Fetch data....</td></tr>}
                     <ExpenseList items={expenses} deleteItem={deleteExpense} />
                 </tbody>
                 <tfoot className="table-primary">
