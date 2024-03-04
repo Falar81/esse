@@ -148,8 +148,8 @@ function App() {
                                 {
                                     expenses.reduce((accumulator, expense) => {
                                         if (expense.type === 'Uscita')
-                                            return accumulator - Number(expense.amount);
-                                        return accumulator + Number(expense.amount);
+                                            return (accumulator - Number(expense.amount));
+                                        return (accumulator + Number(expense.amount)).toFixed(2);
                                     }, 0)
                                 }
                             </span>
