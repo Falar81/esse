@@ -103,7 +103,7 @@ function App() {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">Inserisci</h5>
                             <button type="button" className="btn-close" onClick={() => modal.hide()} aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
@@ -133,7 +133,17 @@ function App() {
                     </tr>
                 </thead>
                 <tbody>
-                {isLoading && <tr><td colSpan="6" className="text-center">Fetch data....</td></tr>}
+                {isLoading && 
+                <tr>
+                    <td colSpan="6" className="text-center">
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">data fetch...</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                        }
                     <ExpenseList items={expenses} deleteItem={deleteExpense} />
                 </tbody>
                 <tfoot className="table-primary">
