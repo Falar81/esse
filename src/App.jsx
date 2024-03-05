@@ -31,7 +31,7 @@ function App() {
             setIsLoading(true);
             const response = await fetch(url, options);
             const data = await response.json();
-            setIsLoading(false);             
+            setIsLoading(false);
             setExpenses(data);
         }
         catch (e) {
@@ -51,24 +51,22 @@ function App() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
-        setExpense({ ...expense, [name]: value });
-        if(name === 'category' && value === 'Varie'){            
-            setExpense({...expense, type: 'Entrata',category: 'Varie'});
-            
-        }
-        if(name === 'category' && value === 'Fornitori'){            
-            setExpense({...expense, type: 'Uscita',category: 'Fornitori'});
-            
-        }
-        if(name === 'category' && value === 'Rimborsi'){            
-            setExpense({...expense, type: 'Uscita',category: 'Rimborsi'});            
-        }
-        if(name === 'category' && value === 'Compensi'){            
-            setExpense({...expense, type: 'Uscita',category: 'Compensi'});            
-        }
 
-        
+        setExpense({ ...expense, [name]: value });
+        if (name === 'category' && value === 'Varie') {
+            setExpense({ ...expense, type: 'Entrata', category: 'Varie' });
+
+        }
+        if (name === 'category' && value === 'Fornitori') {
+            setExpense({ ...expense, type: 'Uscita', category: 'Fornitori' });
+
+        }
+        if (name === 'category' && value === 'Rimborsi') {
+            setExpense({ ...expense, type: 'Uscita', category: 'Rimborsi' });
+        }
+        if (name === 'category' && value === 'Compensi') {
+            setExpense({ ...expense, type: 'Uscita', category: 'Compensi' });
+        }
     }
 
     const handleExpenseSubmit = (e) => {
@@ -114,11 +112,17 @@ function App() {
                     </div>
                 </div>
             </div>
+
             <span className="text-center">
                 <h1> ESSE</h1> <h3>Mese di <b>{moment().format('MMM')}{' '}{moment().format('YYYY')}</b></h3>
             </span>
-
-            <table className="mt-3 table table-striped table-responsive">
+            <nav className="navbar navbar bg-light">
+                <div className="container-fluid">
+                    <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
+                    </button>
+                </div>
+            </nav>
+            <table className="mt-3 table table-mobile-responsive table-mobile-striped">
                 <thead className="table-primary">
                     <tr>
                         <th scope="col">Data</th>
@@ -126,24 +130,21 @@ function App() {
                         <th scope="col">Descrizione</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Importo</th>
-                        <th scope="col" className="text-end">
-                            <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
-                            </button>
-                        </th>
+                        <th scope="col">Azione</th>
                     </tr>
                 </thead>
                 <tbody>
-                {isLoading && 
-                <tr>
-                    <td colSpan="6" className="text-center">
-                        <div class="text-center">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">data fetch...</span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                        }
+                    {isLoading &&
+                        <tr>
+                            <td colSpan="6" className="text-center">
+                                <div className="text-center">
+                                    <div className="spinner-border" role="status">
+                                        <span className="visually-hidden">data fetch...</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                     <ExpenseList items={expenses} deleteItem={deleteExpense} />
                 </tbody>
                 <tfoot className="table-primary">
