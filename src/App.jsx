@@ -16,7 +16,8 @@ function App() {
         category: ""
     });
     const [isLoading, setIsLoading] = useState(false);
-    const [isSelected, setIsSelected] = useState(false);
+    // const [clickCount, setClickCount] = useState(1);
+    // const [iconDelete, setIconDelete] = useState('bi bi-trash2');
     const [expenses, setExpenses] = useState([]);
     const [modal, setModal] = useState(null)
     const exampleModal = useRef()
@@ -46,7 +47,10 @@ function App() {
     }, [])
 
     const deleteExpense = async (id) => {
-        makeAPICall(id, { method: 'DELETE' });
+        const shouldRemove = confirm("Confermi la rimozione?")
+        if (shouldRemove) {
+           makeAPICall(id, { method: 'DELETE' });
+        }
     }
 
     const handleChange = (e) => {
@@ -160,7 +164,7 @@ function App() {
                                     expenses.reduce((accumulator, expense) => {
                                         if (expense.type === 'Uscita')
                                             return (accumulator - Number(expense.amount));
-                                        return (accumulator + Number(expense.amount)).toFixed(2);
+                                        return (accumulator + Number(expense.amount));
                                     }, 0)
                                 }
                             </span>
