@@ -24,9 +24,9 @@ function App() {
 
 
     const makeAPICall = async (param, options) => {
-        let url = 'https://esseapi.onrender.com/sampleData';
+        let url = 'https://esseapi.vercel.app/sampleData';
         if (options.method === 'DELETE') {
-            url = `https://esseapi.onrender.com/sampleData${param ? "/" + param : ""}`
+            url = `https://esseapi.vercel.app/sampleData${param ? "/" + param : ""}`
         }
         try {
             setIsLoading(true);
