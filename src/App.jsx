@@ -16,9 +16,8 @@ function App() {
         category: ""
     });
     const [isLoading, setIsLoading] = useState(false);
-    // const [clickCount, setClickCount] = useState(1);
-    // const [iconDelete, setIconDelete] = useState('bi bi-trash2');
     const [expenses, setExpenses] = useState([]);
+    const [expensesFiltered, setExpensesFiltered] = useState([]);
     const [modal, setModal] = useState(null)
     const exampleModal = useRef()
 
@@ -34,6 +33,7 @@ function App() {
             const data = await response.json();
             setIsLoading(false);
             setExpenses(data);
+            setExpensesFiltered(data);
         }
         catch (e) {
             console.log(e)
@@ -97,6 +97,13 @@ function App() {
         }
     }
 
+    const handleFilter = (e) => {
+        const filteredExpense = expenses.filter((expense) =>
+        expense.description.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setExpensesFiltered(filteredExpense);
+    }
+
 
     return (
         <>
@@ -124,7 +131,11 @@ function App() {
                 <div className="container-fluid">
                     <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
                     </button>
+                    <div className="d-flex">
+                    <input type="text" placeholder="Filtra in descrizione" className="form-control" onChange={handleFilter}></input>
                 </div>
+                </div>
+                
             </nav>
             <table className="mt-3 table table-mobile-responsive table-mobile-striped">
                 <thead className="table-primary">
@@ -149,7 +160,7 @@ function App() {
                             </td>
                         </tr>
                     }
-                    <ExpenseList items={expenses} deleteItem={deleteExpense} />
+                    <ExpenseList items={expensesFiltered} deleteItem={deleteExpense} />
                 </tbody>
                 <tfoot className="table-primary">
                     <tr>
@@ -161,7 +172,7 @@ function App() {
                         <th scope="col" className="text-end table-primary">Totale €.{' '}
                             <span className="badge rounded-pill text-bg-info px-3 shadow">
                                 {
-                                    expenses.reduce((accumulator, expense) => {
+                                    expensesFiltered.reduce((accumulator, expense) => {
                                         if (expense.type === 'Uscita')
                                             return (accumulator - Number(expense.amount));
                                         return (accumulator + Number(expense.amount));
