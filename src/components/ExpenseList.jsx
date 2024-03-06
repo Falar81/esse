@@ -8,7 +8,7 @@ export const ExpenseList = ({ items, deleteItem }) => {
                     const { _id, date, type, description, amount, category } = item;
                     return (
                         <tr key={_id}>
-                            <td scope="row" data-content="Data">{moment(date).format('DD-MM-YYYY')}</td>
+                            <td scope="row" data-content="Data">{moment(date).format('YYYY-MM-DD')}</td>
                             <td data-content="Categoria">{category}</td>
                             <td data-content="Descrizione">{description}</td>
                             <td data-content="Tipo">{type}</td>

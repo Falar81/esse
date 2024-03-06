@@ -135,7 +135,7 @@ function App() {
                     <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
                     </button>
                     <div className=" ">
-                        <label for="#searchinputField" className="form-label">Filtra</label>
+                        <label htmlFor="searchinputField" className="form-label">Filtra</label>
                         <input id="searchinputField" type="text" placeholder="Categoria, desc., data" className="form-control" onChange={handleFilter}></input>
                     </div>
                 </div>
