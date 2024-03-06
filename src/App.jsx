@@ -49,7 +49,7 @@ function App() {
     const deleteExpense = async (id) => {
         const shouldRemove = confirm("Confermi la rimozione?")
         if (shouldRemove) {
-           makeAPICall(id, { method: 'DELETE' });
+            makeAPICall(id, { method: 'DELETE' });
         }
     }
 
@@ -98,10 +98,13 @@ function App() {
     }
 
     const handleFilter = (e) => {
-        const filteredExpense = expenses.filter((expense) =>
-        expense.description.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setExpensesFiltered(filteredExpense);
+        const filteredExpense = expenses.filter((expense) =>{
+        
+            const descCat = expense.description.toLowerCase()+expense.category.toLowerCase();     
+            return descCat.includes(e.target.value.toLowerCase());
+            
+        });
+        setExpensesFiltered(filteredExpense);
     }
 
 
@@ -132,10 +135,10 @@ function App() {
                     <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
                     </button>
                     <div className="d-flex">
-                    <input type="text" placeholder="Filtra in descrizione" className="form-control" onChange={handleFilter}></input>
+                        <input type="text" placeholder="Filtra in descrizione" className="form-control" onChange={handleFilter}></input>
+                    </div>
                 </div>
-                </div>
-                
+
             </nav>
             <table className="mt-3 table table-mobile-responsive table-mobile-striped">
                 <thead className="table-primary">
