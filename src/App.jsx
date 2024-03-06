@@ -100,7 +100,7 @@ function App() {
     const handleFilter = (e) => {
         const filteredExpense = expenses.filter((expense) =>{
         
-            const descCat = expense.description.toLowerCase()+expense.category.toLowerCase();     
+            const descCat = expense.category.toLowerCase()+' '+expense.description.toLowerCase()+' '+expense.date;     
             return descCat.includes(e.target.value.toLowerCase());
             
         });
@@ -134,8 +134,9 @@ function App() {
                 <div className="container-fluid">
                     <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
                     </button>
-                    <div className="d-flex">
-                        <input type="text" placeholder="Filtra in descrizione" className="form-control" onChange={handleFilter}></input>
+                    <div className=" ">
+                        <label for="#searchinputField" className="form-label">Filtra</label>
+                        <input id="searchinputField" type="text" placeholder="Categoria, desc., data" className="form-control" onChange={handleFilter}></input>
                     </div>
                 </div>
 
