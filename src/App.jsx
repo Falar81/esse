@@ -90,7 +90,7 @@ function App() {
                 console.log(e)
             }
         }else{
-            setExpensesFiltered(expenses);
+            makeAPICall('', { method: 'GET' });
         }
     }
 
