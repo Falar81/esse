@@ -74,6 +74,27 @@ function App() {
         }
     }
 
+    const handleChangeDateRange = async (dateRange) => {
+        if (dateRange) {
+            let [from, to] = dateRange;
+            const url = 'https://esseapi.vercel.app/sampleData/' + from.toISOString().split('T')[0] + '/' + to.toISOString().split('T')[0];
+            try {
+                setIsLoading(true);
+                const response = await fetch(url);
+                const data = await response.json();
+                setIsLoading(false);
+                setExpenses(data);
+                setExpensesFiltered(data);
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }else{
+            setExpensesFiltered(expenses);
+        }
+    }
+
+
     const handleExpenseSubmit = (e) => {
         e.preventDefault();
         if (expense.amount && expense.type && expense.description) {
@@ -101,7 +122,7 @@ function App() {
     const handleFilter = (e) => {
         const filteredExpense = expenses.filter((expense) => {
 
-            const descCat = expense.category.toLowerCase() + ' ' + expense.description.toLowerCase() + ' ' + expense.date;
+            const descCat = expense.category.toLowerCase() + ' ' + expense.description.toLowerCase();
             return descCat.includes(e.target.value.toLowerCase());
 
         });
@@ -127,8 +148,8 @@ function App() {
                     }
                 </span>
             </div>
-            <Toolbar hf={handleFilter} modal={modal} />
-            
+            <Toolbar hf={handleFilter} modal={modal} hcdg={handleChangeDateRange} />
+
             <table className="mt-3 table table-mobile-responsive table-mobile-striped">
                 <thead className="table-primary">
                     <tr>
