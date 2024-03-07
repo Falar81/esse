@@ -5,6 +5,7 @@ import moment from "moment";
 import "moment/min/moment-with-locales"
 import "bootstrap-icons/font/bootstrap-icons.css"
 import { Modal } from 'bootstrap'
+import Toolbar from "./components/Toolbar.jsx";
 
 function App() {
     const [expense, setExpense] = useState({
@@ -19,7 +20,7 @@ function App() {
     const [expenses, setExpenses] = useState([]);
     const [expensesFiltered, setExpensesFiltered] = useState([]);
     const [modal, setModal] = useState(null)
-    const exampleModal = useRef()
+    const formModal = useRef()
 
 
     const makeAPICall = async (param, options) => {
@@ -42,7 +43,7 @@ function App() {
     useEffect(() => {
         makeAPICall('', { method: 'GET' });
         setModal(
-            new Modal(exampleModal.current)
+            new Modal(formModal.current)
         )
     }, [])
 
@@ -98,11 +99,11 @@ function App() {
     }
 
     const handleFilter = (e) => {
-        const filteredExpense = expenses.filter((expense) =>{
-        
-            const descCat = expense.category.toLowerCase()+' '+expense.description.toLowerCase()+' '+expense.date;     
+        const filteredExpense = expenses.filter((expense) => {
+
+            const descCat = expense.category.toLowerCase() + ' ' + expense.description.toLowerCase() + ' ' + expense.date;
             return descCat.includes(e.target.value.toLowerCase());
-            
+
         });
         setExpensesFiltered(filteredExpense);
     }
@@ -110,48 +111,24 @@ function App() {
 
     return (
         <>
-            {/* Modal */}
-            <div className="modal fade" ref={exampleModal} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Inserisci</h5>
-                            <button type="button" className="btn-close" onClick={() => modal.hide()} aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <ExpenseForm hs={handleExpenseSubmit} hc={handleChange} expense={expense} />
-                        </div>
-                        <div className="modal-footer">
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <ExpenseForm hs={handleExpenseSubmit} hc={handleChange} expense={expense} modal={modal} formModal={formModal} />
+
 
             <div className="text-center">
                 <h1> ESSE</h1> <h3>Mese di <b>{moment().format('MMM')}{' '}{moment().format('YYYY')}</b></h3>
                 <span className="badge rounded-pill text-bg-info px-3 shadow">
-                                {
-                                    expensesFiltered.reduce((accumulator, expense) => {
-                                        if (expense.type === 'Uscita')
-                                            return (accumulator - Number(expense.amount));
-                                        return (accumulator + Number(expense.amount));
-                                    }, 0)
-                                }
-                            </span>
+                    {
+                        expensesFiltered.reduce((accumulator, expense) => {
+                            if (expense.type === 'Uscita')
+                                return (accumulator - Number(expense.amount));
+                            return (accumulator + Number(expense.amount));
+                        }, 0)
+                    }
+                </span>
             </div>
-            <nav className="navbar mt-3 navbar bg-light">
-                <div className="container-fluid">
-                <div className="form-floating">                        
-                        <input id="searchinputField" type="text" placeholder="Categoria, desc., data" className="form-control shadow" onChange={handleFilter}></input>
-                        <label htmlFor="searchinputField" className="form-label">Filtra Cat., Desc., Data</label>
-                    </div>
-                    
-                    <button type="button" onClick={() => modal.show()} className="btn btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
-                    </button>
-                    
-                </div>
-
-            </nav>
+            <Toolbar hf={handleFilter} modal={modal} />
+            
             <table className="mt-3 table table-mobile-responsive table-mobile-striped">
                 <thead className="table-primary">
                     <tr>
