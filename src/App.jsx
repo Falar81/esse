@@ -127,17 +127,28 @@ function App() {
                 </div>
             </div>
 
-            <span className="text-center">
+            <div className="text-center">
                 <h1> ESSE</h1> <h3>Mese di <b>{moment().format('MMM')}{' '}{moment().format('YYYY')}</b></h3>
-            </span>
-            <nav className="navbar navbar bg-light">
+                <span className="badge rounded-pill text-bg-info px-3 shadow">
+                                {
+                                    expensesFiltered.reduce((accumulator, expense) => {
+                                        if (expense.type === 'Uscita')
+                                            return (accumulator - Number(expense.amount));
+                                        return (accumulator + Number(expense.amount));
+                                    }, 0)
+                                }
+                            </span>
+            </div>
+            <nav className="navbar mt-3 navbar bg-light">
                 <div className="container-fluid">
-                    <button type="button" onClick={() => modal.show()} className="btn btn-sm btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
-                    </button>
-                    <div className=" ">
-                        <label htmlFor="searchinputField" className="form-label">Filtra</label>
-                        <input id="searchinputField" type="text" placeholder="Categoria, desc., data" className="form-control" onChange={handleFilter}></input>
+                <div className="form-floating">                        
+                        <input id="searchinputField" type="text" placeholder="Categoria, desc., data" className="form-control shadow" onChange={handleFilter}></input>
+                        <label htmlFor="searchinputField" className="form-label">Filtra Cat., Desc., Data</label>
                     </div>
+                    
+                    <button type="button" onClick={() => modal.show()} className="btn btn-outline-success px-3 shadow"><i className="bi bi-file-earmark-plus"></i>
+                    </button>
+                    
                 </div>
 
             </nav>
@@ -173,17 +184,7 @@ function App() {
                         <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
-                        <th scope="col" className="text-end table-primary">Totale €.{' '}
-                            <span className="badge rounded-pill text-bg-info px-3 shadow">
-                                {
-                                    expensesFiltered.reduce((accumulator, expense) => {
-                                        if (expense.type === 'Uscita')
-                                            return (accumulator - Number(expense.amount));
-                                        return (accumulator + Number(expense.amount));
-                                    }, 0)
-                                }
-                            </span>
-                        </th>
+                        <th scope="col"></th>
                     </tr>
                 </tfoot>
             </table>
