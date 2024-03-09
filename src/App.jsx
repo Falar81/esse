@@ -129,7 +129,7 @@ function App() {
                             if (expense.type === 'Uscita')
                                 return (accumulator - Number(expense.amount));
                             return (accumulator + Number(expense.amount));
-                        }, 0)
+                        }, 0).toFixed(2)
                     }
                 </span>
             </div>
