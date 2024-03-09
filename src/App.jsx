@@ -1,16 +1,16 @@
 import { ExpenseList } from "./components/ExpenseList.jsx";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ExpenseForm } from "./components/ExpenseForm.jsx";
 import moment from "moment";
 import "moment/min/moment-with-locales"
 import "bootstrap-icons/font/bootstrap-icons.css"
-import { Modal } from 'bootstrap'
+// import { Modal } from 'bootstrap'
 import Toolbar from "./components/Toolbar.jsx";
 
 function App() {
     const [expense, setExpense] = useState({
         id: "",
-        date: moment().format('YYYY-MM-DD'),
+        date: new Date(),
         type: "",
         description: "",
         amount: "",
@@ -19,8 +19,9 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [expenses, setExpenses] = useState([]);
     const [expensesFiltered, setExpensesFiltered] = useState([]);
-    const [modal, setModal] = useState(null)
-    const formModal = useRef()
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
 
 
     const makeAPICall = async (param, options) => {
@@ -42,9 +43,6 @@ function App() {
     }
     useEffect(() => {
         makeAPICall('', { method: 'GET' });
-        setModal(
-            new Modal(formModal.current)
-        )
     }, [])
 
     const deleteExpense = async (id) => {
@@ -54,30 +52,10 @@ function App() {
         }
     }
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-
-        setExpense({ ...expense, [name]: value });
-        if (name === 'category' && value === 'Varie') {
-            setExpense({ ...expense, type: 'Entrata', category: 'Varie' });
-
-        }
-        if (name === 'category' && value === 'Fornitori') {
-            setExpense({ ...expense, type: 'Uscita', category: 'Fornitori' });
-
-        }
-        if (name === 'category' && value === 'Rimborsi') {
-            setExpense({ ...expense, type: 'Uscita', category: 'Rimborsi' });
-        }
-        if (name === 'category' && value === 'Compensi') {
-            setExpense({ ...expense, type: 'Uscita', category: 'Compensi' });
-        }
-    }
-
     const handleChangeDateRange = async (dateRange) => {
         if (dateRange) {
             let [from, to] = dateRange;
-            const url = 'https://esseapi.vercel.app/sampleData/' + from.toISOString().split('T')[0] + '/' + to.toISOString().split('T')[0];
+            const url = 'https://esseapi.vercel.app/sampleData/' + moment(from).format('YYYY-MM-DD') + '/' + moment(to).format('YYYY-MM-DD');
             try {
                 setIsLoading(true);
                 const response = await fetch(url);
@@ -107,15 +85,16 @@ function App() {
                 method: 'POST',
                 body: JSON.stringify(expense)
             });
+
             setExpense({
                 id: "",
-                date: moment().format('YYYY-MM-DD'),
+                date: new Date(),
                 type: "",
                 description: "",
                 amount: "",
                 category: ""
             });
-            modal.hide();
+            setOpenModal(false);
         }
     }
 
@@ -133,7 +112,13 @@ function App() {
     return (
         <>
 
-            <ExpenseForm hs={handleExpenseSubmit} hc={handleChange} expense={expense} modal={modal} formModal={formModal} />
+            <ExpenseForm 
+                hs={handleExpenseSubmit} 
+                expense={expense} 
+                setExpense={setExpense} 
+                open={openModal}  
+                hcm={handleCloseModal} 
+            />
 
 
             <div className="text-center">
@@ -148,7 +133,11 @@ function App() {
                     }
                 </span>
             </div>
-            <Toolbar hf={handleFilter} modal={modal} hcdg={handleChangeDateRange} />
+            <Toolbar 
+                hf={handleFilter} 
+                hom={handleOpenModal} 
+                hcdg={handleChangeDateRange} 
+            />
 
             <table className="mt-3 table table-mobile-responsive table-mobile-striped">
                 <thead className="table-primary">
@@ -175,16 +164,6 @@ function App() {
                     }
                     <ExpenseList items={expensesFiltered} deleteItem={deleteExpense} />
                 </tbody>
-                <tfoot className="table-primary">
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </tfoot>
             </table>
         </>
     )

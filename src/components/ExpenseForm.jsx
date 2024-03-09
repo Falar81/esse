@@ -1,59 +1,85 @@
-export const ExpenseForm = ({ hc, hs, expense,modal,formModal }) => {
+import 'rsuite/Modal/styles/index.css';
+import 'rsuite/Form/styles/index.css';
+import 'rsuite/FormControl/styles/index.css';
+import 'rsuite/FormControlLabel/styles/index.css';
+import 'rsuite/FormGroup/styles/index.css';
+import 'rsuite/SelectPicker/styles/index.css';
+import 'rsuite/InputNumber/styles/index.css';
+import { Modal, Form, ButtonToolbar, Button, SelectPicker, DatePicker,InputNumber } from 'rsuite';
+
+export const ExpenseForm = ({ hs, hcm, open, expense, setExpense }) => {
+
+
+    const selectCategoryData = ['Compensi', 'Rimborsi', 'Fornitori', 'Varie'].map(item => ({
+        label: item,
+        value: item
+    }));
+    const selectTypeData = ['Entrata', 'Uscita'].map(item => ({
+        label: item,
+        value: item
+    }));
+
+    const handleCategoryChange = (data) => {
+        if (data) {
+            switch (data) {
+                case 'Varie':
+                    setExpense({ ...expense, type: 'Entrata', category: 'Varie' });
+                    break;
+                default:
+                    setExpense({ ...expense, type: 'Uscita', category: data });
+            }
+        } else {
+            setExpense({ ...expense, type: '', category: ''});
+        }
+
+
+    }
 
     return (
         <>
-            {/* Modal */}
-            <div className="modal fade" ref={formModal} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Inserisci</h5>
-                            <button type="button" className="btn-close" onClick={() => modal.hide()} aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <form>
-                                <div className="row ">
-                                    <div className="form-group ">
-                                        <label htmlFor="exampleFormControlDesc">Data</label>
-                                        <input type="date" value={expense.date} name="date" onChange={(e) => { hc(e) }} className="form-control shadow" />
-                                    </div>
-                                    <div className="form-group ">
-                                        <label htmlFor="exampleFormControlCategory">Categoria</label>
-                                        <select value={expense.category} name="category" onChange={(e) => { hc(e) }} className="form-control shadow" id="exampleFormControlCategory" placeholder="Categoria">
-                                            <option></option>
-                                            <option>Compensi</option>
-                                            <option>Rimborsi</option>
-                                            <option>Fornitori</option>
-                                            <option>Varie</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group ">
-                                        <label htmlFor="exampleFormControlSelect1">Tipo</label>
-                                        <select value={expense.type} name="type" onChange={(e) => { hc(e) }} className="form-control shadow" id="exampleFormControlSelect1">
-                                            <option></option>
-                                            <option value="Entrata">Entrata +</option>
-                                            <option value="Uscita">Uscita -</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group ">
-                                        <label htmlFor="exampleFormControlDesc">Importo</label>
-                                        <input type="number" value={expense.amount} name="amount" onChange={(e) => { hc(e) }} className="form-control shadow" />
-                                    </div>
+            <Modal open={open} onClose={hcm}>
 
-                                    <div className="form-group ">
-                                        <label htmlFor="exampleFormControlDesc">Desc.</label>
-                                        <input type="text" value={expense.description} name="description" onChange={(e) => { hc(e) }} className="form-control shadow" id="exampleFormControlDesc" />
-                                    </div>
-                                </div>
-                                <button type="submit" className="btn btn-success mt-3 shadow offset-5 px-4 shadow" onClick={hs}><i className="bi bi-patch-check"></i></button>
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <Modal.Header>
+                    <Modal.Title>Inserisci</Modal.Title>
+                </Modal.Header>
 
+                <Modal.Body>
+                    <Form
+                        layout="vertical"
+                        formValue={expense}
+                        onChange={expense => { setExpense(expense) }}
+                        onSubmit={hs}
+                    >
+                        <Form.Group controlId="date">
+                            <Form.ControlLabel>Data:</Form.ControlLabel>
+                            <Form.Control name="date" format='yyyy-MM-dd' accepter={DatePicker} />
+                        </Form.Group>
+                        <Form.Group controlId="category">
+                            <Form.ControlLabel>Catergoria:</Form.ControlLabel>
+                            <Form.Control onChange={handleCategoryChange} name="category" accepter={SelectPicker} data={selectCategoryData} />
+                        </Form.Group>
+                        <Form.Group controlId="type">
+                            <Form.ControlLabel>Tipo:</Form.ControlLabel>
+                            <Form.Control name="type" accepter={SelectPicker} data={selectTypeData} />
+                        </Form.Group>
+                        <Form.Group controlId="amount">
+                            <Form.ControlLabel>Importo:</Form.ControlLabel>
+                            <Form.Control accepter={InputNumber} name="amount" />
+                        </Form.Group>
+                        <Form.Group controlId="description">
+                            <Form.ControlLabel>Descrizione:</Form.ControlLabel>
+                            <Form.Control name="description" />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <ButtonToolbar>
+                                <Button type='submit' onClick={hs} appearance="primary"><i className="bi bi-patch-check"></i></Button>
+                            </ButtonToolbar>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer></Modal.Footer>
+            </Modal>
         </>
     )
 }
