@@ -43,24 +43,24 @@ export const ExpenseForm = ({ hs, hcm, open, expense, setExpense }) => {
                     <Modal.Title>Inserisci</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
+                <Modal.Body style={{padding:'5px'}}>
                     <Form
-                        layout="vertical"
+                        fluid
                         formValue={expense}
                         onChange={expense => { setExpense(expense) }}
                         onSubmit={hs}
                     >
                         <Form.Group controlId="date">
                             <Form.ControlLabel>Data:</Form.ControlLabel>
-                            <Form.Control name="date" format='yyyy-MM-dd' accepter={DatePicker} />
+                            <Form.Control block name="date" format='yyyy-MM-dd' accepter={DatePicker} />
                         </Form.Group>
                         <Form.Group controlId="category">
                             <Form.ControlLabel>Catergoria:</Form.ControlLabel>
-                            <Form.Control onChange={handleCategoryChange} name="category" accepter={SelectPicker} data={selectCategoryData} />
+                            <Form.Control block onChange={handleCategoryChange} name="category" accepter={SelectPicker} data={selectCategoryData} />
                         </Form.Group>
                         <Form.Group controlId="type">
                             <Form.ControlLabel>Tipo:</Form.ControlLabel>
-                            <Form.Control name="type" accepter={SelectPicker} data={selectTypeData} />
+                            <Form.Control block name="type" accepter={SelectPicker} data={selectTypeData} />
                         </Form.Group>
                         <Form.Group controlId="amount">
                             <Form.ControlLabel>Importo:</Form.ControlLabel>
@@ -73,7 +73,7 @@ export const ExpenseForm = ({ hs, hcm, open, expense, setExpense }) => {
 
                         <Form.Group>
                             <ButtonToolbar>
-                                <Button type='submit' onClick={hs} appearance="primary"><i className="bi bi-patch-check"></i></Button>
+                                <Button block type='submit' onClick={hs} appearance="primary" ><i className="bi bi-patch-check"></i></Button>
                             </ButtonToolbar>
                         </Form.Group>
                     </Form>
