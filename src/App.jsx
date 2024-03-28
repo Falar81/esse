@@ -7,6 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css"
 // import { Modal } from 'bootstrap'
 import Toolbar from "./components/Toolbar.jsx";
 
+
 function App() {
     const [expense, setExpense] = useState({
         id: "",
@@ -67,7 +68,7 @@ function App() {
             catch (e) {
                 console.log(e)
             }
-        }else{
+        } else {
             makeAPICall('', { method: 'GET' });
         }
     }
@@ -112,12 +113,12 @@ function App() {
     return (
         <>
 
-            <ExpenseForm 
-                hs={handleExpenseSubmit} 
-                expense={expense} 
-                setExpense={setExpense} 
-                open={openModal}  
-                hcm={handleCloseModal} 
+            <ExpenseForm
+                hs={handleExpenseSubmit}
+                expense={expense}
+                setExpense={setExpense}
+                open={openModal}
+                hcm={handleCloseModal}
             />
 
 
@@ -133,38 +134,12 @@ function App() {
                     }
                 </span>
             </div>
-            <Toolbar 
-                hf={handleFilter} 
-                hom={handleOpenModal} 
-                hcdg={handleChangeDateRange} 
+            <Toolbar
+                hf={handleFilter}
+                hom={handleOpenModal}
+                hcdg={handleChangeDateRange}
             />
-
-            <table className="mt-3 table table-mobile-responsive table-mobile-striped">
-                <thead className="table-primary">
-                    <tr>
-                        <th scope="col">Data</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Importo</th>
-                        <th scope="col">Azione</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {isLoading &&
-                        <tr>
-                            <td colSpan="6" className="text-center">
-                                <div className="text-center">
-                                    <div className="spinner-border" role="status">
-                                        <span className="visually-hidden">data fetch...</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    <ExpenseList items={expensesFiltered} deleteItem={deleteExpense} />
-                </tbody>
-            </table>
+            <ExpenseList items={expensesFiltered} deleteItem={deleteExpense} loading={isLoading} setLoading={setIsLoading}/>
         </>
     )
 }

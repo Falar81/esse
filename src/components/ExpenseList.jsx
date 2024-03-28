@@ -1,27 +1,105 @@
 import moment from "moment/moment.js";
+import { useState } from "react";
+import { Table,Button } from 'rsuite';
+const { Column, HeaderCell, Cell } = Table;
+import 'rsuite/Table/styles/index.css';
 
-export const ExpenseList = ({ items, deleteItem }) => {
+
+export const ExpenseList = ({ items, deleteItem,loading, setLoading }) => {
+    
+    const [sortColumn, setSortColumn] = useState();
+    const [sortType, setSortType] = useState();
+
+    const getData = () => {
+        if (sortColumn && sortType) {
+            
+            return items.sort((a, b) => {
+                
+                let x = a[sortColumn];
+                let y = b[sortColumn];
+                
+                if (typeof x === 'string') {
+                    x = sortColumn==='date'?new Date(a[sortColumn]): x.charCodeAt();
+                }
+                if (typeof y === 'string') {
+                    y = sortColumn==='date'?new Date(b[sortColumn]): y.charCodeAt();
+                }
+                if (sortType === 'asc') {
+                    return x - y;
+                } else {
+                    return y - x;
+                }
+            });
+        }
+        return items;
+    };
+
+    const handleSortColumn = (sortColumn, sortType) => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            setSortColumn(sortColumn);
+            setSortType(sortType);
+        }, 500);
+    };
+
     return (
         <>
-            {
-                items.map((item) => {
-                    const { _id, date, type, description, amount, category } = item;
-                    return (
-                        <tr key={_id}>
-                            <td scope="row" data-content="Data">{moment(date).format('YYYY-MM-DD')}</td>
-                            <td data-content="Categoria">{category}</td>
-                            <td data-content="Descrizione">{description}</td>
-                            <td data-content="Tipo">{type}</td>
-                            <td data-content="Importo" className={(type === 'Uscita' ? 'text-danger' : 'text-success')}>{amount} €</td>
-                            <td className="text-end">
-                                <button className="btn btn-outline-danger btn-sm px-3 shadow" onClick={() => deleteItem(_id)}>
-                                    <i className="bi bi-trash2"></i>
-                                </button>
-                            </td>
-                        </tr>)
-                }
-                )
-            }
+            <Table
+                autoHeight
+                affixHeader
+                affixHorizontalScrollbar
+                data={getData()}
+                sortColumn={sortColumn}
+                sortType={sortType}
+                onSortColumn={handleSortColumn}
+                loading={loading}
+                // onRowClick={rowData => {
+                //     console.log(rowData);
+                // }}
+            >
+                <Column flexGrow={2} fixed sortable>
+                    <HeaderCell>Data</HeaderCell>
+                    <Cell dataKey="date">
+                        {rowData => (
+                            moment(rowData.date).format('DD-MM-YYYY')
+                        )}
+                    </Cell>
+                </Column>
+
+                <Column flexGrow={1} fixed sortable>
+                    <HeaderCell>Categoria</HeaderCell>
+                    <Cell dataKey="category" />
+                </Column>
+
+                <Column flexGrow={2} fixed sortable>
+                    <HeaderCell>Descrizione</HeaderCell>
+                    <Cell dataKey="description" />
+                </Column>
+
+                <Column flexGrow={1} fixed sortable>
+                    <HeaderCell>Tipo</HeaderCell>
+                    <Cell dataKey="type" />
+                </Column>
+
+                <Column flexGrow={1}  fixed sortable>
+                    <HeaderCell>Import</HeaderCell>
+                    <Cell dataKey="amount" />                    
+                </Column>
+                <Column fixed>
+                    <HeaderCell>...</HeaderCell>
+                    <Cell flexGrow={1} fixed style={{ padding: '6px' }}>
+                        
+                            {rowData => (
+                                                            
+                                 <Button className="btn btn-sm btn-outline-danger" onClick={() => deleteItem(rowData._id)}>
+                                     <i className="bi bi-trash2"></i>
+                                 </Button>
+                            )}
+                        
+                    </Cell>
+                </Column>
+            </Table>
         </>
     )
 }
