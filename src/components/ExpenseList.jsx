@@ -47,6 +47,7 @@ export const ExpenseList = ({ items, deleteItem, loading, setLoading }) => {
         <>
             <Table
                 virtualized
+                affixHeader
                 height={600}
                 data={getData()}
                 sortColumn={sortColumn}
