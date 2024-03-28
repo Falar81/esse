@@ -46,9 +46,8 @@ export const ExpenseList = ({ items, deleteItem,loading, setLoading }) => {
     return (
         <>
             <Table
-                autoHeight
-                affixHeader
-                affixHorizontalScrollbar
+                virtualized
+                height={600}
                 data={getData()}
                 sortColumn={sortColumn}
                 sortType={sortType}
